@@ -7,9 +7,9 @@ projectStatusUrl="${SONAR_HOST_URL}/api/qualitygates/project_status?projectKey=$
 project_status="$(curl -s -u ${SONAR_TOKEN}: -G --data-urlencode --data-urlencode \
 ${projectStatusUrl})"
 
-codeOk=$(jq -r '.projectStatus.conditions[] | select(.status=="OK") | "\n✅Status: " + .status, "MetricKey: " + .metricKey, "Comparator: " + .comparator, "ErrorThreshold: " + .errorThreshold, "ActualValue: " + .actualValue' <<< "$project_status")
+codeOk=$(jq -r '.projectStatus.conditions[] | select(.status=="OK") | "\n✅Status: " + .status, "MetricKey: " + .metricKey, "Comparator: " + .comparator, "ErrorThreshold: " + .errorThreshold, "ActualValue: " + .actualValue, "SonarURL: https://monitoring.deepin.market/sonarqube"' <<< "$project_status")
 
-codeFail=$(jq -r '.projectStatus.conditions[] | select(.status=="ERROR") | "\n💣Status: " + .status, "MetricKey: " + .metricKey, "Comparator: " + .comparator, "ErrorThreshold: " + .errorThreshold, "ActualValue: " + .actualValue' <<< "$project_status")
+codeFail=$(jq -r '.projectStatus.conditions[] | select(.status=="ERROR") | "\n💣Status: " + .status, "MetricKey: " + .metricKey, "Comparator: " + .comparator, "ErrorThreshold: " + .errorThreshold, "ActualValue: " + .actualValue, "SonarURL: https://monitoring.deepin.market/sonarqube"' <<< "$project_status")
 
 error="ERROR CONFIGURATION"
 
